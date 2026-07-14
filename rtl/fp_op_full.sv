@@ -18,9 +18,15 @@ module ufp_add_full
     ufp.in      in1, in2,   // input ufp signal
     ufp.out     out         // output ufp signal (= in1 + in2)
 );
+    localparam int in1_iw = `fp_iw(in1);
+    localparam int in2_iw = `fp_iw(in2);
+    localparam int iw_aligned = `fp_max(in1_iw, in2_iw);
+    localparam int in1_qw = `fp_qw(in1);
+    localparam int in2_qw = `fp_qw(in2);
+    localparam int qw_aligned = `fp_max(in1_qw, in2_qw);
 
-    localparam iw_aligned = `fp_max(`fp_iw(in1),`fp_iw(in2));
-    localparam qw_aligned = `fp_max(`fp_qw(in1),`fp_qw(in2));
+    // localparam iw_aligned = `fp_max(`fp_iw(in1),`fp_iw(in2));
+    // localparam qw_aligned = `fp_max(`fp_qw(in1),`fp_qw(in2));
 
     if ((`fp_iw(out) != iw_aligned + 1) || (`fp_qw(out) != qw_aligned))
         $error({"%m: Incorrect output word length for a full-width add!",
@@ -44,9 +50,15 @@ module sfp_add_full
     sfp.in      in1, in2,   // input sfp signal
     sfp.out     out         // output sfp signal (= in1 + in2)
 );
+    localparam int in1_iw = `fp_iw(in1);
+    localparam int in2_iw = `fp_iw(in2);
+    localparam int iw_aligned = `fp_max(in1_iw, in2_iw);
+    localparam int in1_qw = `fp_qw(in1);
+    localparam int in2_qw = `fp_qw(in2);
+    localparam int qw_aligned = `fp_max(in1_qw, in2_qw);
 
-    localparam iw_aligned = `fp_max(`fp_iw(in1),`fp_iw(in2));
-    localparam qw_aligned = `fp_max(`fp_qw(in1),`fp_qw(in2));
+//    localparam iw_aligned = `fp_max(`fp_iw(in1),`fp_iw(in2));
+//    localparam qw_aligned = `fp_max(`fp_qw(in1),`fp_qw(in2));
 
     if ((`fp_iw(out) != iw_aligned + 1) || (`fp_qw(out) != qw_aligned))
         $error({"%m: Incorrect output word length for a full-width add!",
@@ -71,8 +83,15 @@ module ufp_sub_full
     sfp.out     out         // output sfp signal (= in1 - in2)
 );
 
-    localparam iw_aligned = `fp_max(`fp_iw(in1),`fp_iw(in2));
-    localparam qw_aligned = `fp_max(`fp_qw(in1),`fp_qw(in2));
+    localparam int in1_iw = `fp_iw(in1);
+    localparam int in2_iw = `fp_iw(in2);
+    localparam int iw_aligned = `fp_max(in1_iw, in2_iw);
+    localparam int in1_qw = `fp_qw(in1);
+    localparam int in2_qw = `fp_qw(in2);
+    localparam int qw_aligned = `fp_max(in1_qw, in2_qw);
+
+//    localparam iw_aligned = `fp_max(`fp_iw(in1),`fp_iw(in2));
+//    localparam qw_aligned = `fp_max(`fp_qw(in1),`fp_qw(in2));
 
     if ((`fp_iw(out) != iw_aligned + 1) || (`fp_qw(out) != qw_aligned))
         $error({"%m: Incorrect output word length for a full-width subtract!",
@@ -96,9 +115,15 @@ module sfp_sub_full
     sfp.in      in1, in2,   // input sfp signal
     sfp.out     out         // output sfp signal (= in1 - in2)
 );
-
-    localparam iw_aligned = `fp_max(`fp_iw(in1),`fp_iw(in2));
-    localparam qw_aligned = `fp_max(`fp_qw(in1),`fp_qw(in2));
+    localparam int in1_iw = `fp_iw(in1);
+    localparam int in2_iw = `fp_iw(in2);
+    localparam int iw_aligned = `fp_max(in1_iw, in2_iw);
+    localparam int in1_qw = `fp_qw(in1);
+    localparam int in2_qw = `fp_qw(in2);
+    localparam int qw_aligned = `fp_max(in1_qw, in2_qw);
+    
+//    localparam iw_aligned = `fp_max(`fp_iw(in1),`fp_iw(in2));
+//    localparam qw_aligned = `fp_max(`fp_qw(in1),`fp_qw(in2));
 
     if ((`fp_iw(out) != iw_aligned + 1) || (`fp_qw(out) != qw_aligned))
         $error({"%m: Incorrect output word length for a full-width subtract!",

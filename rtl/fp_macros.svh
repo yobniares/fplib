@@ -33,6 +33,13 @@
     `define mult_iw(fp1, fp2) (`fp_iw(fp1) + `fp_iw(fp2))
     `define mult_qw(fp1, fp2) (`fp_qw(fp1) + `fp_qw(fp2))
 
+    `define add_iw_direct(fp1_iw, fp2_iw) (`fp_max(fp1_iw, fp2_iw) + 1)
+    `define add_qw_direct(fp1_qw, fp2_qw) (`fp_max(fp1_qw, fp2_qw))
+    `define sub_iw_direct(fp1_iw, fp2_iw) `add_iw_direct(fp1_iw, fp2_iw)
+    `define sub_qw_direct(fp1_qw, fp2_qw) `add_qw_direct(fp1_qw, fp2_qw)
+    `define mult_iw_direct(fp1_iw, fp2_iw) (fp1_iw + fp2_iw)
+    `define mult_qw_direct(fp1_qw, fp2_qw) (fp1_qw + fp2_qw)
+
     // 'real' representing an IEEE float NaN
     `define float_nan ($bitstoreal(64'hffffffffffffffff))
 

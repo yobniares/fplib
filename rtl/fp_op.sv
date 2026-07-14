@@ -19,8 +19,14 @@ module ufp_add_ind # (
     ufp.out     out,        // output ufp signal (= in1 + in2)
     output      clipping    // clipping indicator (active-high)
 );
+    localparam int in1_iw = `fp_iw(in1);
+    localparam int in2_iw = `fp_iw(in2);
+    localparam int iw_add = `add_iw_direct(in1_iw, in2_iw);
+    localparam int in1_qw = `fp_qw(in1);
+    localparam int in2_qw = `fp_qw(in2);
+    localparam int qw_add = `add_qw_direct(in1_qw, in2_qw);
 
-    ufp #(`add_iw(in1, in2), `add_qw(in1, in2)) sum();
+    ufp #(iw_add, qw_add) sum();
     ufp_add_full u_add (in1, in2, sum);
     ufp_resize_ind # (.clip(clip)) u_resize (sum, out, clipping);
 
@@ -35,7 +41,14 @@ module sfp_add_ind # (
     sfp.out     out,        // output sfp signal (= in1 + in2)
     output      clipping    // clipping indicator (active-high)
 );
-    sfp #(`add_iw(in1, in2), `add_qw(in1, in2)) sum();
+    localparam int in1_iw = `fp_iw(in1);
+    localparam int in2_iw = `fp_iw(in2);
+    localparam int iw_add = `add_iw_direct(in1_iw, in2_iw);
+    localparam int in1_qw = `fp_qw(in1);
+    localparam int in2_qw = `fp_qw(in2);
+    localparam int qw_add = `add_qw_direct(in1_qw, in2_qw);
+    
+    sfp #(iw_add, qw_add) sum();
     sfp_add_full u_add (in1, in2, sum);
     sfp_resize_ind # (.clip(clip)) u_resize (sum, out, clipping);
 
@@ -50,7 +63,14 @@ module ufp_sub_ind # (
     sfp.out     out,        // output sfp signal (= in1 - in2)
     output      clipping    // clipping indicator (active-high)
 );
-    sfp #(`add_iw(in1, in2), `add_qw(in1, in2)) sub();
+    localparam int in1_iw = `fp_iw(in1);
+    localparam int in2_iw = `fp_iw(in2);
+    localparam int iw_add = `sub_iw_direct(in1_iw, in2_iw);
+    localparam int in1_qw = `fp_qw(in1);
+    localparam int in2_qw = `fp_qw(in2);
+    localparam int qw_add = `sub_qw_direct(in1_qw, in2_qw);
+
+    sfp #(iw_add, qw_add) sub();
     ufp_sub_full u_sub (in1, in2, sub);
     sfp_resize_ind # (.clip(clip)) u_resize (sub, out, clipping);
 
@@ -65,7 +85,14 @@ module sfp_sub_ind # (
     sfp.out     out,        // output sfp signal (= in1 - in2)
     output      clipping    // clipping indicator (active-high)
 );
-    sfp #(`add_iw(in1, in2), `add_qw(in1, in2)) sub();
+    localparam int in1_iw = `fp_iw(in1);
+    localparam int in2_iw = `fp_iw(in2);
+    localparam int iw_add = `sub_iw_direct(in1_iw, in2_iw);
+    localparam int in1_qw = `fp_qw(in1);
+    localparam int in2_qw = `fp_qw(in2);
+    localparam int qw_add = `sub_qw_direct(in1_qw, in2_qw);
+    
+    sfp #(iw_add, qw_add) sub();
     sfp_sub_full u_sub (in1, in2, sub);
     sfp_resize_ind # (.clip(clip)) u_resize (sub, out, clipping);
 
@@ -80,7 +107,14 @@ module ufp_mult_ind # (
     ufp.out     out,        // output ufp signal (= in1 * in2)
     output      clipping    // clipping indicator (active-high)
 );
-    ufp #(`mult_iw(in1, in2), `mult_qw(in1, in2)) prod();
+    localparam int in1_iw = `fp_iw(in1);
+    localparam int in2_iw = `fp_iw(in2);
+    localparam int iw_mult = `mult_iw_direct(in1_iw, in2_iw);
+    localparam int in1_qw = `fp_qw(in1);
+    localparam int in2_qw = `fp_qw(in2);
+    localparam int qw_mult = `mult_qw_direct(in1_qw, in2_qw);
+
+    ufp #(iw_mult, qw_mult) prod();
     ufp_mult_full u_mult (in1, in2, prod);
     ufp_resize_ind # (.clip(clip)) u_resize (prod, out, clipping);
 
@@ -95,7 +129,14 @@ module sfp_mult_ind # (
     sfp.out     out,        // output sfp signal (= in1 * in2)
     output      clipping    // clipping indicator (active-high)
 );
-    sfp #(`mult_iw(in1, in2), `mult_qw(in1, in2)) prod();
+    localparam int in1_iw = `fp_iw(in1);
+    localparam int in2_iw = `fp_iw(in2);
+    localparam int iw_mult = `mult_iw_direct(in1_iw, in2_iw);
+    localparam int in1_qw = `fp_qw(in1);
+    localparam int in2_qw = `fp_qw(in2);
+    localparam int qw_mult = `mult_qw_direct(in1_qw, in2_qw);
+    
+    sfp #(iw_mult, qw_mult) prod();
     sfp_mult_full u_mult (in1, in2, prod);
     sfp_resize_ind # (.clip(clip)) u_resize (prod, out, clipping);
 
