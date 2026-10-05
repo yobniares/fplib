@@ -7,7 +7,7 @@
 // Copyright (c) 2024 Skyworks Inc.
 // SPDX-License-Identifier: Apache-2.0
 // ======================================================================================
-
+`timescale 1ns / 1ps
 `include "fp_macros.svh"
 
 // Addition of ufp signals followed by resizing (equivalant to ufp_add_full + ufp_resize_ind)
@@ -15,8 +15,8 @@ module ufp_add_ind # (
     parameter   clip = 1    // (if reducing iw) 0 = wrap, 1 = clip
 )
 (
-    ufp.in      in1, in2,   // input ufp signal
-    ufp.out     out,        // output ufp signal (= in1 + in2)
+    ufp.slave_in      in1, in2,   // input ufp signal
+    ufp.master_out     out,        // output ufp signal (= in1 + in2)
     output      clipping    // clipping indicator (active-high)
 );
     localparam int in1_iw = `fp_iw(in1);
@@ -37,8 +37,8 @@ module sfp_add_ind # (
     parameter   clip = 1    // (if reducing iw) 0 = wrap, 1 = clip
 )
 (
-    sfp.in      in1, in2,   // input sfp signal
-    sfp.out     out,        // output sfp signal (= in1 + in2)
+    sfp.slave_in      in1, in2,   // input sfp signal
+    sfp.master_out     out,        // output sfp signal (= in1 + in2)
     output      clipping    // clipping indicator (active-high)
 );
     localparam int in1_iw = `fp_iw(in1);
@@ -59,8 +59,8 @@ module ufp_sub_ind # (
     parameter   clip = 1    // (if reducing iw) 0 = wrap, 1 = clip
 )
 (
-    ufp.in      in1, in2,   // input ufp signal
-    sfp.out     out,        // output sfp signal (= in1 - in2)
+    ufp.slave_in      in1, in2,   // input ufp signal
+    sfp.master_out     out,        // output sfp signal (= in1 - in2)
     output      clipping    // clipping indicator (active-high)
 );
     localparam int in1_iw = `fp_iw(in1);
@@ -81,8 +81,8 @@ module sfp_sub_ind # (
     parameter   clip = 1    // (if reducing iw) 0 = wrap, 1 = clip
 )
 (
-    sfp.in      in1, in2,   // input sfp signal
-    sfp.out     out,        // output sfp signal (= in1 - in2)
+    sfp.slave_in      in1, in2,   // input sfp signal
+    sfp.master_out     out,        // output sfp signal (= in1 - in2)
     output      clipping    // clipping indicator (active-high)
 );
     localparam int in1_iw = `fp_iw(in1);
@@ -103,8 +103,8 @@ module ufp_mult_ind # (
     parameter   clip = 1    // (if reducing iw) 0 = wrap, 1 = clip
 )
 (
-    ufp.in      in1, in2,   // input ufp signal
-    ufp.out     out,        // output ufp signal (= in1 * in2)
+    ufp.slave_in      in1, in2,   // input ufp signal
+    ufp.master_out     out,        // output ufp signal (= in1 * in2)
     output      clipping    // clipping indicator (active-high)
 );
     localparam int in1_iw = `fp_iw(in1);
@@ -125,8 +125,8 @@ module sfp_mult_ind # (
     parameter   clip = 1    // (if reducing iw) 0 = wrap, 1 = clip
 )
 (
-    sfp.in      in1, in2,   // input sfp signal
-    sfp.out     out,        // output sfp signal (= in1 * in2)
+    sfp.slave_in      in1, in2,   // input sfp signal
+    sfp.master_out     out,        // output sfp signal (= in1 * in2)
     output      clipping    // clipping indicator (active-high)
 );
     localparam int in1_iw = `fp_iw(in1);
@@ -148,8 +148,8 @@ module ufp_add # (
     parameter   clip = 0    // (if reducing iw) 0 = wrap, 1 = clip
 )
 (
-    ufp.in      in1, in2,   // input ufp signal
-    ufp.out     out         // output ufp signal (= in1 + in2)
+    ufp.slave_in      in1, in2,   // input ufp signal
+    ufp.master_out     out         // output ufp signal (= in1 + in2)
 );
     ufp_add_ind #(.clip(clip)) u_add_ind (.in1(in1), .in2(in2), .out(out), .clipping());
 
@@ -160,8 +160,8 @@ module sfp_add # (
     parameter   clip = 0    // (if reducing iw) 0 = wrap, 1 = clip
 )
 (
-    sfp.in      in1, in2,   // input sfp signal
-    sfp.out     out         // output sfp signal (= in1 + in2)
+    sfp.slave_in      in1, in2,   // input sfp signal
+    sfp.master_out     out         // output sfp signal (= in1 + in2)
 );
     sfp_add_ind #(.clip(clip)) u_add_ind (.in1(in1), .in2(in2), .out(out), .clipping());
 
@@ -172,8 +172,8 @@ module ufp_sub # (
     parameter   clip = 0    // (if reducing iw) 0 = wrap, 1 = clip
 )
 (
-    ufp.in      in1, in2,   // input ufp signal
-    sfp.out     out         // output sfp signal (= in1 - in2)
+    ufp.slave_in      in1, in2,   // input ufp signal
+    sfp.master_out     out         // output sfp signal (= in1 - in2)
 );
     ufp_sub_ind #(.clip(clip)) u_sub_ind (.in1(in1), .in2(in2), .out(out), .clipping());
 
@@ -184,8 +184,8 @@ module sfp_sub # (
     parameter   clip = 0    // (if reducing iw) 0 = wrap, 1 = clip
 )
 (
-    sfp.in      in1, in2,   // input sfp signal
-    sfp.out     out         // output sfp signal (= in1 - in2)
+    sfp.slave_in      in1, in2,   // input sfp signal
+    sfp.master_out     out         // output sfp signal (= in1 - in2)
 );
     sfp_sub_ind #(.clip(clip)) u_sub_ind (.in1(in1), .in2(in2), .out(out), .clipping());
 
@@ -196,8 +196,8 @@ module ufp_mult # (
     parameter   clip = 0    // (if reducing iw) 0 = wrap, 1 = clip
 )
 (
-    ufp.in      in1, in2,   // input ufp signal
-    ufp.out     out         // output ufp signal (= in1 * in2)
+    ufp.slave_in      in1, in2,   // input ufp signal
+    ufp.master_out     out         // output ufp signal (= in1 * in2)
 );
     ufp_mult_ind #(.clip(clip)) u_mult_ind (.in1(in1), .in2(in2), .out(out), .clipping());
 
@@ -208,8 +208,8 @@ module sfp_mult # (
     parameter   clip = 0    // (if reducing iw) 0 = wrap, 1 = clip
 )
 (
-    sfp.in      in1, in2,   // input sfp signal
-    sfp.out     out         // output sfp signal (= in1 * in2)
+    sfp.slave_in      in1, in2,   // input sfp signal
+    sfp.master_out     out         // output sfp signal (= in1 * in2)
 );
     sfp_mult_ind #(.clip(clip)) u_mult_ind (.in1(in1), .in2(in2), .out(out), .clipping());
 

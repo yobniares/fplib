@@ -7,7 +7,7 @@
 // Copyright (c) 2024 Skyworks Inc.
 // SPDX-License-Identifier: Apache-2.0
 // ======================================================================================
-
+`timescale 1ns / 1ps
 // Reduce word length of the signed integer input, clipping values
 // higher/lower than the output word length can fit.
 module clip_signed # (

@@ -9,7 +9,7 @@
 // ======================================================================================
 
 `include "fp_macros.svh"
-
+`timescale 1ns / 1ps
 // Change the # of int/frac bits of a ufp signal (with a clipping indicator)
 // - Decreasing # frac bits: truncates LSBs (floor toward -inf)
 // - Increasing # frac bits: pads zero LSBs
@@ -19,8 +19,8 @@ module ufp_resize_ind # (
     clip      = 1         // (if reducing iw) 0 = wrap, 1 = clip
 )
 (
-    ufp.in    in,         // input ufp signal
-    ufp.out   out,        // input ufp signal
+    ufp.slave_in    in,         // input ufp signal
+    ufp.master_out   out,        // input ufp signal
     output    clipping    // clipping indicator (active-high)
 );
 
@@ -81,8 +81,8 @@ module sfp_resize_ind # (
     clip      = 1         // (if reducing iw) 0 = wrap, 1 = clip
 )
 (
-    sfp.in    in,         // input sfp signal
-    sfp.out   out,        // output sfp signal
+    sfp.slave_in    in,         // input sfp signal
+    sfp.master_out   out,        // output sfp signal
     output    clipping    // clipping indicator (active-high)
 );
 
@@ -143,8 +143,8 @@ module ufp_resize # (
     clip      = 0        // (if reducing iw) 0 = wrap, 1 = clip
 )
 (
-    ufp.in    in,        // input ufp signal
-    ufp.out   out        // output ufp signal
+    ufp.slave_in    in,        // input ufp signal
+    ufp.master_out   out        // output ufp signal
 );
 
     ufp_resize_ind #(.clip(clip)) u_resize_ind (.in(in), .out(out), .clipping());
@@ -160,8 +160,8 @@ module sfp_resize # (
     clip      = 0        // (if reducing iw) 0 = wrap, 1 = clip
 )
 (
-    sfp.in    in,        // input sfp signal
-    sfp.out   out        // output sfp signal
+    sfp.slave_in    in,        // input sfp signal
+    sfp.master_out   out        // output sfp signal
 );
 
     sfp_resize_ind #(.clip(clip)) u_resize_ind (.in(in), .out(out), .clipping());

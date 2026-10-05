@@ -7,7 +7,7 @@
 // Copyright (c) 2024 Skyworks Inc.
 // SPDX-License-Identifier: Apache-2.0
 // ================================================================================
-
+`timescale 1ns / 1ps
 `include "fp_macros.svh"
 
 // ufp 'signal' : unsigned fixed point scaler
@@ -28,13 +28,13 @@ interface ufp #(
     localparam is_signed = 0;
 
     `ifdef SYNTHESIS
-        modport out       (output val, input dummy_qw, input dummy_wl, input dummy_signed);
-        modport in        (input  val, input dummy_qw, input dummy_wl, input dummy_signed);
+        modport master_out       (output val, input dummy_qw, input dummy_wl, input dummy_signed);
+        modport slave_in        (input  val, input dummy_qw, input dummy_wl, input dummy_signed);
     `else
         real fval;
         assign fval = `fp_to_float(val, qw); // holds the read-only float representation
-        modport out      (output val, input fval, input dummy_qw, input dummy_wl, input dummy_signed);
-        modport in       (input  val, input fval, input dummy_qw, input dummy_wl, input dummy_signed);
+        modport master_out      (output val, input fval, input dummy_qw, input dummy_wl, input dummy_signed);
+        modport slave_in       (input  val, input fval, input dummy_qw, input dummy_wl, input dummy_signed);
     `endif
 endinterface
 
@@ -53,13 +53,13 @@ interface sfp #(
     localparam is_signed = 1;
 
     `ifdef SYNTHESIS
-        modport out       (output val, input dummy_qw, input dummy_wl, input dummy_signed);
-        modport in        (input  val, input dummy_qw, input dummy_wl, input dummy_signed);
+        modport master_out       (output val, input dummy_qw, input dummy_wl, input dummy_signed);
+        modport slave_in        (input  val, input dummy_qw, input dummy_wl, input dummy_signed);
     `else
         real fval;
         assign fval = `fp_to_float(val, qw); // holds the read-only float representation
-        modport out      (output val, input fval, input dummy_qw, input dummy_wl, input dummy_signed);
-        modport in       (input  val, input fval, input dummy_qw, input dummy_wl, input dummy_signed);
+        modport master_out      (output val, input fval, input dummy_qw, input dummy_wl, input dummy_signed);
+        modport slave_in       (input  val, input fval, input dummy_qw, input dummy_wl, input dummy_signed);
     `endif
 
 endinterface
@@ -80,14 +80,14 @@ interface ufp_arr #(
     localparam is_signed = 0;
 
     `ifdef SYNTHESIS
-        modport out       (output val, input dummy_qw, input dummy_wl, input dummy_signed);
-        modport in        (input  val, input dummy_qw, input dummy_wl, input dummy_signed);
+        modport master_out       (output val, input dummy_qw, input dummy_wl, input dummy_signed);
+        modport slave_in        (input  val, input dummy_qw, input dummy_wl, input dummy_signed);
     `else
         real fval [size];
         always_comb for (int i = 0; i < size; i = i + 1)
             fval[i] = `fp_to_float(val[i], qw);
-        modport out      (output val, input fval, input dummy_qw, input dummy_wl, input dummy_signed);
-        modport in       (input  val, input fval, input dummy_qw, input dummy_wl, input dummy_signed);
+        modport master_out      (output val, input fval, input dummy_qw, input dummy_wl, input dummy_signed);
+        modport slave_in       (input  val, input fval, input dummy_qw, input dummy_wl, input dummy_signed);
     `endif
 endinterface
 
@@ -107,14 +107,14 @@ interface sfp_arr #(
     localparam is_signed = 1;
 
     `ifdef SYNTHESIS
-        modport out       (output val, input dummy_qw, input dummy_wl, input dummy_signed);
-        modport in        (input  val, input dummy_qw, input dummy_wl, input dummy_signed);
+        modport master_out       (output val, input dummy_qw, input dummy_wl, input dummy_signed);
+        modport slave_in        (input  val, input dummy_qw, input dummy_wl, input dummy_signed);
     `else
         real fval [size];
         always_comb for (int i = 0; i < size; i = i + 1)
             fval[i] = `fp_to_float(val[i], qw);
-        modport out      (output val, input fval, input dummy_qw, input dummy_wl, input dummy_signed);
-        modport in       (input  val, input fval, input dummy_qw, input dummy_wl, input dummy_signed);
+        modport master_out      (output val, input fval, input dummy_qw, input dummy_wl, input dummy_signed);
+        modport slave_in       (input  val, input fval, input dummy_qw, input dummy_wl, input dummy_signed);
     `endif
 endinterface
 
@@ -135,16 +135,16 @@ interface ufp_arr2 #(
     localparam is_signed = 0;
 
     `ifdef SYNTHESIS
-        modport out       (output val, input dummy_qw, input dummy_wl, input dummy_signed);
-        modport in        (input  val, input dummy_qw, input dummy_wl, input dummy_signed);
+        modport master_out       (output val, input dummy_qw, input dummy_wl, input dummy_signed);
+        modport slave_in        (input  val, input dummy_qw, input dummy_wl, input dummy_signed);
     `else
         real fval [size1][size2];
         always_comb
             for (int i = 0; i < size1; i = i + 1)
                 for (int j = 0; j < size2; j = j + 1)
                     fval[i][j] = `fp_to_float(val[i][j], qw);
-        modport out      (output val, input fval, input dummy_qw, input dummy_wl, input dummy_signed);
-        modport in       (input  val, input fval, input dummy_qw, input dummy_wl, input dummy_signed);
+        modport master_out      (output val, input fval, input dummy_qw, input dummy_wl, input dummy_signed);
+        modport slave_in       (input  val, input fval, input dummy_qw, input dummy_wl, input dummy_signed);
     `endif
 endinterface
 
@@ -165,15 +165,15 @@ interface sfp_arr2 #(
     localparam is_signed = 1;
 
     `ifdef SYNTHESIS
-        modport out       (output val, input dummy_qw, input dummy_wl, input dummy_signed);
-        modport in        (input  val, input dummy_qw, input dummy_wl, input dummy_signed);
+        modport master_out       (output val, input dummy_qw, input dummy_wl, input dummy_signed);
+        modport slave_in        (input  val, input dummy_qw, input dummy_wl, input dummy_signed);
     `else
         real fval [size1][size2];
         always_comb
             for (int i = 0; i < size1; i = i + 1)
                 for (int j = 0; j < size2; j = j + 1)
                     fval[i][j] = `fp_to_float(val[i][j], qw);
-        modport out      (output val, input fval, input dummy_qw, input dummy_wl, input dummy_signed);
-        modport in       (input  val, input fval, input dummy_qw, input dummy_wl, input dummy_signed);
+        modport master_out      (output val, input fval, input dummy_qw, input dummy_wl, input dummy_signed);
+        modport slave_in       (input  val, input fval, input dummy_qw, input dummy_wl, input dummy_signed);
     `endif
 endinterface

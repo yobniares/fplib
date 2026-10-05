@@ -7,7 +7,7 @@
 // Copyright (c) 2024 Skyworks Inc.
 // SPDX-License-Identifier: Apache-2.0
 // ======================================================================================
-
+`timescale 1ns / 1ps
 `include "fp_macros.svh"
 
 // Convert a real parameter (constant) to a sfp signal by rounding.

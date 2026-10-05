@@ -7,7 +7,7 @@
 // Copyright (c) 2024 Skyworks Inc.
 // SPDX-License-Identifier: Apache-2.0
 // ======================================================================================
-
+`timescale 1ns / 1ps
 `include "fp_macros.svh"
 
 // Addition of ufp signals with full precision.
@@ -15,8 +15,8 @@
 // out.iw = max(in1.iw, in2.iw) + 1 and out.qw = max(in1.qw, in2.qw)
 module ufp_add_full
 (
-    ufp.in      in1, in2,   // input ufp signal
-    ufp.out     out         // output ufp signal (= in1 + in2)
+    ufp.slave_in      in1, in2,   // input ufp signal
+    ufp.master_out     out         // output ufp signal (= in1 + in2)
 );
     localparam int in1_iw = `fp_iw(in1);
     localparam int in2_iw = `fp_iw(in2);
@@ -47,8 +47,8 @@ endmodule
 // out.iw = max(in1.iw, in2.iw) + 1 and out.qw = max(in1.qw, in2.qw)
 module sfp_add_full
 (
-    sfp.in      in1, in2,   // input sfp signal
-    sfp.out     out         // output sfp signal (= in1 + in2)
+    sfp.slave_in      in1, in2,   // input sfp signal
+    sfp.master_out     out         // output sfp signal (= in1 + in2)
 );
     localparam int in1_iw = `fp_iw(in1);
     localparam int in2_iw = `fp_iw(in2);
@@ -79,8 +79,8 @@ endmodule
 // out.iw = max(in1.iw, in2.iw) + 1 and out.qw = max(in1.qw, in2.qw)
 module ufp_sub_full
 (
-    ufp.in      in1, in2,   // input ufp signal
-    sfp.out     out         // output sfp signal (= in1 - in2)
+    ufp.slave_in      in1, in2,   // input ufp signal
+    sfp.master_out     out         // output sfp signal (= in1 - in2)
 );
 
     localparam int in1_iw = `fp_iw(in1);
@@ -112,8 +112,8 @@ endmodule
 // out.iw = max(in1.iw, in2.iw) + 1 and out.qw = max(in1.qw, in2.qw)
 module sfp_sub_full
 (
-    sfp.in      in1, in2,   // input sfp signal
-    sfp.out     out         // output sfp signal (= in1 - in2)
+    sfp.slave_in      in1, in2,   // input sfp signal
+    sfp.master_out     out         // output sfp signal (= in1 - in2)
 );
     localparam int in1_iw = `fp_iw(in1);
     localparam int in2_iw = `fp_iw(in2);
@@ -144,8 +144,8 @@ endmodule
 // out.iw = in1.iw + in2.iw and out.qw = in1.qw + in2.qw
 module ufp_mult_full
 (
-    ufp.in      in1, in2,   // input ufp signal
-    ufp.out     out         // output ufp signal (= in1 * in2)
+    ufp.slave_in      in1, in2,   // input ufp signal
+    ufp.master_out     out         // output ufp signal (= in1 * in2)
 );
 
     if ((`fp_iw(in1) + `fp_iw(in2) != `fp_iw(out)) || (`fp_qw(in1) + `fp_qw(in2) != `fp_qw(out)))
@@ -161,8 +161,8 @@ endmodule
 // out.iw = in1.iw + in2.iw and out.qw = in1.qw + in2.qw
 module sfp_mult_full
 (
-    sfp.in      in1, in2,   // input sfp signal
-    sfp.out     out         // output sfp signal (= in1 * in2)
+    sfp.slave_in      in1, in2,   // input sfp signal
+    sfp.master_out     out         // output sfp signal (= in1 * in2)
 );
 
     if ((`fp_iw(in1) + `fp_iw(in2) != `fp_iw(out)) || (`fp_qw(in1) + `fp_qw(in2) != `fp_qw(out)))
